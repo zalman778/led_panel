@@ -20,6 +20,8 @@ class LedService(
 
     init {
         listen()
+        scanner.init()
+        scanner.run()
     }
 
     private fun listen() {
