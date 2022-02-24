@@ -12,7 +12,7 @@ object Config {
 
     var LED_STRIPS_CNT = 60
     var LED_CNT = 29
-    var PIN_NUMBER = 13
+    var PIN_NUMBER = 1
     var PIN_CHANNEL = 2
 
     //максимальная частота
