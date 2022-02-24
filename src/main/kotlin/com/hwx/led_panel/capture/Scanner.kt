@@ -9,6 +9,7 @@ import be.tarsos.dsp.util.fft.FFT
 import com.hwx.led_panel.Config
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import org.springframework.stereotype.Component
 import java.io.IOException
 import java.util.*
 import javax.sound.sampled.*
@@ -30,6 +31,8 @@ interface ISoundScanner {
 /**
  * Created by Hiwoo on 06.02.2018.
  */
+
+@Component
 class Scanner : ISoundScanner {
 
     private val bufferSize = 4096
