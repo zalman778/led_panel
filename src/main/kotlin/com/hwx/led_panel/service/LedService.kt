@@ -3,9 +3,7 @@ package com.hwx.led_panel.service
 import com.hwx.led_panel.capture.ISoundScanner
 import com.hwx.led_panel.effect.IFirstEffect
 import com.hwx.led_panel.gpio.ISignalSender
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -20,8 +18,10 @@ class LedService(
 
     init {
         listen()
-        scanner.init()
-        scanner.run()
+        GlobalScope.launch(Dispatchers.Default) {
+            scanner.init()
+            scanner.run()
+        }
     }
 
     private fun listen() {

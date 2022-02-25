@@ -45,16 +45,23 @@ class Scanner : ISoundScanner {
     private var maxHz = 0.0
     private var minHz = 0.0
 
-    private var audioProcessor = object : AudioProcessor {
-        override fun process(event: AudioEvent) = onProcessorEvent(event)
-        override fun processingFinished() = Unit
-    }
+
 
     private val format = AudioFormat(sampleRate.toFloat(), 16, 1, true, true)
     private val line = AudioSystem.getTargetDataLine(format)
     private val stream = AudioInputStream(line)
     private val audioStream = JVMAudioInputStream(stream)
-    private val audioDispatcher = AudioDispatcher(audioStream, bufferSize, 0)
+
+    private val audioProcessor = object : AudioProcessor {
+        override fun process(event: AudioEvent) = onProcessorEvent(event)
+        override fun processingFinished() {
+            val t = 1
+        }
+    }
+
+    private val audioDispatcher = AudioDispatcher(audioStream, bufferSize, 0).apply {
+        addAudioProcessor(audioProcessor)
+    }
 
     private val fft = FFT(bufferSize)
     private val amplitudes = FloatArray(fftSize)
@@ -125,11 +132,11 @@ class Scanner : ISoundScanner {
     }
 
     override fun init() {
-        clear()
+        //clear()
         try {
             line.open(format, bufferSize)
             line.start()
-            audioDispatcher.addAudioProcessor(audioProcessor)
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
